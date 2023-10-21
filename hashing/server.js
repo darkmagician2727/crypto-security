@@ -84,10 +84,22 @@ app.post("/login", (req, res) => {
 });
 
 // Handle user registration.
+// TODO: Get the username and password from form data
+// TODO: Check if username already exists in the database
+// TODO: If it doesn't, create a new user and store it in the database
+
 app.post("/register", (req, res) => {
-  // TODO: Get the username and password from form data
-  // TODO: Check if username already exists in the database
-  // TODO: If it doesn't, create a new user and store it in the database
+  const { username, password } = req.body;
+
+  if(!db[username]) {
+    db[username] = {
+      username,
+      password: bcrpt.hashSync(password, 10)
+    }
+    res.status(200).send("User created.")
+  }
+
+
   // TODO: Display a success message to the user
   // TODO: If the user already exists, display an error message
   // TODO: Either way, redirect to the homepage so they can log in
